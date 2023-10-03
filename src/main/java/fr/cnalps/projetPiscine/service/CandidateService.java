@@ -51,4 +51,8 @@ public class CandidateService {
     public void update(Candidate candidate){
         candidateRepository.save(candidate);
     }
+
+//    public Iterable<Candidate> findCandidatesByFirstName(String firstname){
+//        return candidateRepository.findByFirstName(firstname);
+//    }
 }

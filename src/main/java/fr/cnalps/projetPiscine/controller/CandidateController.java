@@ -67,4 +67,9 @@ public class CandidateController {
         candidateService.update(candidate);
         return "successfully modify";
     }
+
+//    @GetMapping("/{firstname}")
+//    public @ResponseBody Optional<Candidate> getCandidateByFirstName(@PathVariable(value ="firstname") String firstname){
+//        return candidateService.findByFirstName(firstname);
+//    }
 }

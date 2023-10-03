@@ -50,7 +50,7 @@ public class Candidate {
 
     private List<Pools> candidateInPools;
 
-    @OneToMany(targetEntity = Images.class, mappedBy = "images", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = Images.class, mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Images> images = new ArrayList<>();
 
     /**
