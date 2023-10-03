@@ -1,14 +1,10 @@
 package fr.cnalps.projetPiscine.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,15 +46,15 @@ public class Candidate {
 
     private List<Pools> candidateInPools;
 
-    @OneToMany(targetEntity = Images.class, mappedBy = "images", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Images> images = new ArrayList<>();
+    @OneToOne
+//    @JoinColumn(name = "images_id", referencedColumnName = "id")
+    private Images images;
 
     /**
      * Establishes a many-to-one relationship between this candidate and a group.
      * The foreign key column used in the database table for this relationship is 'groupgandidate_id'.
      */
     @ManyToOne
-//    @JsonBackReference
     @JoinColumn(name = "groupgandidate_id")
     private GroupCandidate groupcandidate;
 

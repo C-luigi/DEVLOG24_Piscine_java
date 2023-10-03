@@ -17,15 +17,18 @@ public class Images {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String imgPath;
+    private String name;
+//    private String imgPath;
 
-    @ManyToOne
-    @JoinColumn(name= "candidate_id")
-    private Candidate candidate;
+    @Lob
+    private byte[] image;
 
-    public Images (int id, String imgPath){
+//    @OneToOne(mappedBy = "images", cascade = CascadeType.ALL)
+//    private Candidate candidate;
+
+    public Images (int id){
         this.id = id;
-        this.imgPath = imgPath;
+//        this.imgPath = imgPath;
     }
 
     public Images() {

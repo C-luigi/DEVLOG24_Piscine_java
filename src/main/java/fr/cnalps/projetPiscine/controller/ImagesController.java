@@ -2,9 +2,13 @@ package fr.cnalps.projetPiscine.controller;
 
 import fr.cnalps.projetPiscine.model.Images;
 import fr.cnalps.projetPiscine.service.ImagesService;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -25,7 +29,16 @@ public class ImagesController {
     }
 
     @PostMapping
-    public Images createImages(@RequestBody Images images) {
+    public Images createImages(@RequestBody (Images images) MultipartFile fichier){
+
+        try {
+            Images images = new Images();
+            images.setId(1);
+            images.setName("profilPic");
+            images.setImage(IOUtils.toByteArray(InputStream.nullInputStream()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return imagesService.createImages(images);
     }
 
