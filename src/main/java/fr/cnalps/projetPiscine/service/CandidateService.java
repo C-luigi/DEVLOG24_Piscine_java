@@ -53,13 +53,4 @@ public class CandidateService {
         candidateRepository.save(candidate);
     }
 
-//    @Transactional
-//    public void addImagesToCandidate(Candidate candidate, String imagePath){
-//        findById(candidate.getId());
-//        Images newImage = new Images();
-//        newImage.setImgPath(imagePath);
-//        imagesService.createImages(newImage);
-//        candidate.setImages(newImage);
-//        candidateRepository.save(candidate);
-//    }
 }

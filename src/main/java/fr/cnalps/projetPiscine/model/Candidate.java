@@ -46,8 +46,6 @@ public class Candidate {
 
     private List<Pools> candidateInPools;
 
-    @OneToOne
-//    @JoinColumn(name = "images_id", referencedColumnName = "id")
 
     /**
      * Establishes a many-to-one relationship between this candidate and a group.

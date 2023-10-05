@@ -1,41 +1,51 @@
 package fr.cnalps.projetPiscine.service;
 
-import fr.cnalps.projetPiscine.model.Images;
-import fr.cnalps.projetPiscine.repository.CandidateRepository;
+
 import fr.cnalps.projetPiscine.repository.ImagesRepository;
-import org.apache.poi.ss.util.ImageUtils;
-import org.apache.xmlgraphics.image.loader.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
-import java.util.Optional;
+import java.nio.file.Paths;
+
 
 @Service
 public class ImagesService {
-    private ImagesRepository imagesRepository;
+    private  ImagesRepository imagesRepository;
 
     @Autowired
-    public ImagesService(CandidateRepository candidateRepository) {
-        this.candidateRepository = candidateRepository;
+    public ImagesService(ImagesRepository imagesRepository) {
+        this.imagesRepository = imagesRepository;
     }
 
-    public String uploadImages(MultipartFile file) throws IOException {
-        Images images = imagesRepository.save(Images.builder())
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .imageData(ImageUtil.compressImage(file.getBytes()));
-        if (images != null){
-            return "image uploaded successfully :" + file.getOriginalFilename();
+    public String uploadImages(String path, MultipartFile file) throws IOException {
+//        filename
+        String name = file.getOriginalFilename();
+//        filePath
+        Path folder = Paths.get(path);
+//        Create folder if not exist
+        if (!Files.exists(folder)){
+            try {
+                Files.createDirectories(folder);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+                throw new IOException("Impossible de créer le dossier");
+            }
         }
-        return null;
+//        File image = new File(path);
+//        if (!image.exists()){
+//            image.mkdir();
+//        }
+//        file copy
+
+        folder.resolve(name);
+        Files.copy(file.getInputStream(), folder);
+        return name;
     }
-    public byte[] downloadImages(String imageName){
-        Optional<Images> dwImages = imagesRepository.findByName(imageName);
-        return ImageUtils.decompressImage(dwImages.get().getImageData());
-    }
+
 }
