@@ -6,6 +6,7 @@ import org.apache.xmlbeans.ResourceLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,32 +24,18 @@ public class ImagesController {
 
     @Autowired
     private ImagesService imagesService;
-    private ResourceLoader resourceLoader;
-    private String resourcesPath;
-
-    @Autowired
-    public ImagesController(ResourceLoader resourceLoader, @Value("${path.images}") String resourcesPath) {
-        this.resourceLoader = resourceLoader;
-        this.resourcesPath = resourcesPath;
-    }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImages(@RequestParam("file") MultipartFile file){
-        if (file.isEmpty()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Veuillez séléctionner un fichier");
-        }
-        try {
-            String destinationPath = resourcesPath + file.getOriginalFilename();
-
-            Path destinationPathfolder = Path.of(destinationPath);
-            Files.copy(file.getInputStream(), destinationPathfolder, StandardCopyOption.REPLACE_EXISTING);
-            return ResponseEntity.ok("Image uploadée avec succès");
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<String> uploadImages(@RequestParam("image") MultipartFile image) throws IOException{
+        String uploadImage = imagesService.uploadImages(file);
+        return ResponseEntity.status(HttpStatus.OK).body(uploadImage);
     }
-
-
+    @GetMapping("/{fileName}")
+    public ResponseEntity<?> downloadImage(@PathVariable String fileName){
+        byte[] imageData=imagesService.downloadImages(fileName);
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.valueOf("images/png"))
+                .body(imageData);
+    }
 
 }

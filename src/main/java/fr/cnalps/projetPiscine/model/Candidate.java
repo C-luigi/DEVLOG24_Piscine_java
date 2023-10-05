@@ -48,7 +48,6 @@ public class Candidate {
 
     @OneToOne
 //    @JoinColumn(name = "images_id", referencedColumnName = "id")
-    private Images images;
 
     /**
      * Establishes a many-to-one relationship between this candidate and a group.
