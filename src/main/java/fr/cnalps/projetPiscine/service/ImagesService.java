@@ -41,9 +41,8 @@ public class ImagesService {
 //        if (!image.exists()){
 //            image.mkdir();
 //        }
-//        file copy
+       // file copy
 
-        folder.resolve(name);
         Files.copy(file.getInputStream(), folder);
         return name;
     }

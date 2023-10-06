@@ -19,7 +19,7 @@ public class ImagesController {
     @Value("${project.image}")
     private String path;
     @PostMapping("/uploadImages")
-    public ResponseEntity<FileResponse> uploadImages(@RequestParam("image") MultipartFile image) throws IOException{
+    public ResponseEntity<FileResponse> uploadImages( @RequestBody MultipartFile image) throws IOException{
         String fileName = null;
         try {
             fileName = this.imagesService.uploadImages(path, image);
