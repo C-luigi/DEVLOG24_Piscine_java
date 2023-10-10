@@ -25,7 +25,7 @@ jobs:
       run: mvn --batch-mode --update-snapshots verify
 
     - name: upload jar on server
-      uses:  scp -p projetPiscine-0.0.1-SNAPSHOT.jar ubuntu@37.187.198.5:/var/www/Projetpiscine
+      uses:  scp projetPiscine-0.0.1-SNAPSHOT.jar ubuntu@37.187.198.5:/var/www/Projetpiscine
       with:
         host: ${{ secrets.HOST }}
         username: ubuntu
