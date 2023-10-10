@@ -12,7 +12,7 @@ public class VersionController {
     @GetMapping
     public ResponseEntity<String> getVersion()
     {
-        return new ResponseEntity<>("{\"version\":\"1.0\"}", HttpStatusCode.valueOf(200));
+        return new ResponseEntity<>("{\"version\":\"1.1\"}", HttpStatusCode.valueOf(200));
     }
 
 }
